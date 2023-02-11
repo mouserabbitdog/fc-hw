@@ -1,33 +1,17 @@
-const prototypes = [
-  {
-    id: "pp-01",
-    title: "Kids-story",
-    artist: "Thomas Buisson",
-    desc: "This prototype was made with ProtoPie, the interactive prototyping tool for all digital product",
-    thumbnail:
-      "https://prototype-shop.s3.ap-northeast-2.amazonaws.com/thumbnails/Kids-story_1.mp4",
-    price: 10,
-    pieUrl: "https://cloud.protopie.io/p/8a6461ad85",
-  },
-  {
-    id: "pp-02",
-    title: "mockyapp",
-    artist: "Ahmed Amr",
-    desc: "This prototype was made with ProtoPie, the interactive prototyping tool for all digital product",
-    thumbnail:
-      "https://prototype-shop.s3.ap-northeast-2.amazonaws.com/thumbnails/mockyapp.mp4",
-    price: 20,
-    pieUrl: "https://cloud.protopie.io/p/27631ac9d5",
-  },
-];
+import usePrototypes from "./../hooks/usePrototypes";
+import useActions from "./../hooks/useActions";
 
 export default function Prototypes() {
+  const prototypes = usePrototypes();
+  const { addToOrder } = useActions();
   return (
     <main>
       <div className="prototypes">
         {prototypes.map((prototype) => {
-          const { id, title, artist, desc, thumbnail, price, pieUrl } =
-            prototype;
+          const { id, title, desc, thumbnail, price, pieUrl } = prototype;
+          const click = () => {
+            addToOrder(id);
+          };
           return (
             <div className="prototypes" key={id}>
               <a href={pieUrl} target="_BLANK" rel="noreferrer">
@@ -44,7 +28,10 @@ export default function Prototypes() {
               </a>
               <div className="prototype__body">
                 <div className="prototype__title">
-                  <div className="btn btn--primary float--right">
+                  <div
+                    className="btn btn--primary float--right"
+                    onClick={click}
+                  >
                     <i className="icon icon--plus" />
                   </div>
                   {title}
